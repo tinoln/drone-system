@@ -18,6 +18,6 @@ public interface DroneService {
 
     Medication loadingDroneWithMedication(Medication medication, Long droneId);
     
-    Drone getDroneBatteryLevel(Long id) throws Exception;
+    Double getDroneBatteryLevel(Long id) throws Exception;
 
 }

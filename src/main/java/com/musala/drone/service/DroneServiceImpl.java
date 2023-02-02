@@ -64,7 +64,6 @@ public class DroneServiceImpl implements DroneService {
     			.filter(drone -> drone.getBattery() > 25)
     			.filter(drone -> drone.getState().equals(State.IDLE))
     			.toList();
-         
     }
     
     @Override
@@ -95,16 +94,12 @@ public class DroneServiceImpl implements DroneService {
         return medicationObject.orElse(medication);
     }
     
-	public Drone getDroneBatteryLevel(Long id) throws Exception {
+	public Double getDroneBatteryLevel(Long id) throws Exception {
 	    	
 	        Optional<Drone> optionalCheck = Optional.of(droneRepository.findById(id))
 	        		.orElseThrow(() -> new DroneNotFoundException("Drone id not found: " + id));
 	        
-	        Drone batteryCheck = new Drone();
-	        	batteryCheck.setSerialNumber(optionalCheck.get().getSerialNumber());
-	        	batteryCheck.setBattery(optionalCheck.get().getBattery());
-	        	
-	        return batteryCheck;
+	        return optionalCheck.get().getBattery();
 	 }
 	
 	public Drone updateLoadingDrone(Drone drone, Long droneId, State state) {

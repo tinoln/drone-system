@@ -27,7 +27,7 @@ public class Drone {
 	@Column(name = "weight_limit")
 	private double weightLimit;
 	@Column(name = "battery")
-	private double battery;
+	private Double battery;
 	@Column(name = "state")
 	private State state;
 	@JsonIgnore

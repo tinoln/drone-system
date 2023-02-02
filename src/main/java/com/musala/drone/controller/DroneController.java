@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.musala.drone.entity.Drone;
 import com.musala.drone.entity.Medication;
-import com.musala.drone.exceptions.DroneNotFoundException;
 import com.musala.drone.service.DroneService;
 
 import jakarta.validation.Valid;
@@ -48,7 +47,6 @@ public class DroneController {
     	Optional<List<Drone>> listDrones = Optional.of(getAvailableDrones().getBody());
     	if (listDrones.get().size() > 0) {
     		availDrone = listDrones.get().get(0);
-    		
     	}
     	
     	medication.setDrone(availDrone);
@@ -64,13 +62,10 @@ public class DroneController {
          return new ResponseEntity<>(loadedDrone, HttpStatus.OK);
     }
     
-    @GetMapping(path = "/batteryCheck/{id}", produces = "application/json")
-    public ResponseEntity<Drone> getDroneBatteryLevel(@PathVariable Long id) throws Exception {
-    
-    	Drone droneLevel = droneService.getDroneBatteryLevel(id);
-	    if (droneLevel.getId() == null) {
-			throw new DroneNotFoundException("Drone Not Found!");
-		}
-		return new ResponseEntity<Drone>(droneLevel, HttpStatus.OK);
+    @GetMapping(path = "/battery-check/{id}", produces = "application/json")
+    public ResponseEntity<Double> getDroneBatteryLevel(@PathVariable Long id) throws Exception {
+
+    	Double droneLevel = droneService.getDroneBatteryLevel(id);
+		return new ResponseEntity<>(droneLevel, HttpStatus.OK);
     }
 }
