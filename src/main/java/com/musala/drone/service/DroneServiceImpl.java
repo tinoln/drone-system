@@ -42,11 +42,11 @@ public class DroneServiceImpl implements DroneService {
 		drone.setModel(loadedDrone.get().getModel());
 		drone.setWeightLimit(loadedDrone.get().getWeightLimit());
 		drone.setBattery(loadedDrone.get().getBattery());
-		drone.setState(loadedDrone.get().getState()); 
+		drone.setState(loadedDrone.get().getState());
 		  
 		List<Medication> medications = new ArrayList<>();
 		if (loadedDrone.isPresent()){
-		   medications =  medicationReposirory.findAll();
+		   medications = medicationReposirory.findAll();
 		}
 		drone.setMedications(medications);
 		  
@@ -72,7 +72,7 @@ public class DroneServiceImpl implements DroneService {
     	Optional<Drone> medDrone = Optional.of(droneRepository.findById(droneId))
     			.orElseThrow(() -> new DroneNotFoundException("Drone not found"));
 
-        Optional<Medication> medicationObject = Optional.of(medicationReposirory.findById(droneId))
+        Optional<Medication> medicationObject = Optional.of(medicationReposirory.findById(medication.getId()))
         		.orElseThrow(()-> new MedicationNotFoundException("Medication not found"));
     	
         List<Medication> medications = getDroneLoadedMedication(droneId).getMedications();
@@ -81,7 +81,7 @@ public class DroneServiceImpl implements DroneService {
             weights.add(md.getWeight());
         }
         //double addedWeight = weights.stream().mapToDouble(Double::doubleValue).sum();
-        double totalWeight = weights.stream().reduce((double) 0, Double::sum);
+        Double totalWeight = weights.stream().reduce((double) 0, Double::sum);
         if (medDrone.isPresent()){
             medication.setDrone(medDrone.orElse(null));
             if (totalWeight < 500 || medication.getWeight() < (500 - totalWeight)){

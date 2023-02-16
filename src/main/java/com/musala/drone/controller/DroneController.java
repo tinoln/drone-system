@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.musala.drone.entity.Drone;
 import com.musala.drone.entity.Medication;
+import com.musala.drone.exceptions.DroneNotFoundException;
 import com.musala.drone.service.DroneService;
 
 import jakarta.validation.Valid;
@@ -47,6 +48,8 @@ public class DroneController {
     	Optional<List<Drone>> listDrones = Optional.of(getAvailableDrones().getBody());
     	if (listDrones.get().size() > 0) {
     		availDrone = listDrones.get().get(0);
+    	} else {
+    		throw new DroneNotFoundException("No loading drones available");
     	}
     	
     	medication.setDrone(availDrone);
